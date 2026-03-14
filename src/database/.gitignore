@@ -1,1 +1,5 @@
 *.sqlite*
+.env
+/vendor
+/storage/*.key
+/public/storage

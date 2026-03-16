@@ -5,33 +5,51 @@
 @section('content')
 <h1>商品一覧</h1>
 
-<div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    @foreach ($products as $product)
-    <div style="border: 1px solid #ccc; padding: 15px; width: 250px;">
-        {{-- 画像 --}}
-        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="width: 100%;">
+{{-- レイアウト全体を囲むコンテナ --}}
+<div class="main-container">
 
-        <h3>{{ $product->name }}</h3>
-        <p>価格: {{ $product->price }}円</p>
-        <p>季節:
-            @foreach($product->seasons as $season)
-            {{ $season->name }}
+    {{-- 左側：検索・並び替えエリア --}}
+    <aside class="sidebar">
+        <form action="{{ route('products.index') }}" method="GET">
+            <div>
+                <input type="text" name="keyword" placeholder="商品名で検索" value="{{ request('keyword') }}">
+            </div>
+
+            <div>
+                <button type="submit">検索</button>
+            </div>
+
+            <p>価格順で表示</p>
+            <div>
+                <select name="sort">
+                    <option value="">価格で並び替え</option>
+                    <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>低い順に表示</option>
+                    <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>高い順に表示</option>
+                </select>
+                <a href="{{ route('products.index') }}">×</a>
+            </div>
+        </form>
+    </aside>
+
+    {{-- 右側：商品一覧エリア --}}
+    <div class="product-list-section">
+        <div class="product-container">
+            @foreach ($products as $product)
+            <a href="{{ route('products.show', $product->id) }}" class="product-link">
+                <div class="product-card">
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                    <h3>{{ $product->name }}</h3>
+                    <p>¥{{ $product->price }}</p>
+                </div>
+            </a>
             @endforeach
-        </p>
-    </div>
-    {{-- ループ文に追記(リンク部分) --}}
-    <div class="product-card">
-        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-        <h3>{{ $product->name }}</h3>
+        </div>
 
-        {{-- 詳細ボタンを追加 --}}
-        <a href="{{ route('products.show', $product->id) }}" class="btn">詳細を見る</a>
+        {{-- ページネーション --}}
+        <div class="pagination">
+            {{ $products->links() }}
+        </div>
     </div>
-    @endforeach
-</div>
 
-{{-- ページネーションリンク --}}
-<div style="margin-top: 20px;">
-    {{ $products->links() }}
 </div>
 @endsection

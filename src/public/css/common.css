@@ -37,3 +37,22 @@ header {
     width: 100%;
     height: auto;
 }
+
+/* レイアウト全体を横並びにする設定 */
+.main-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+/* 左側の検索エリアの幅を固定 */
+.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+}
+
+/* 右側の表示エリアを広げる */
+.product-list-section {
+    flex-grow: 1;
+}

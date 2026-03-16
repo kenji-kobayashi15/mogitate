@@ -26,7 +26,16 @@
                     <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>低い順に表示</option>
                     <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>高い順に表示</option>
                 </select>
-                <a href="{{ route('products.index') }}">×</a>
+                {{-- セレクトボックスのすぐ下に追記 --}}
+                @if(request('sort') == 'asc')
+                <div>
+                    <span>低い順に表示 <a href="{{ route('products.index', request()->except('sort')) }}">×</a></span>
+                </div>
+                @elseif(request('sort') == 'desc')
+                <div>
+                    <span>高い順に表示 <a href="{{ route('products.index', request()->except('sort')) }}">×</a></span>
+                </div>
+                @endif
             </div>
         </form>
     </aside>

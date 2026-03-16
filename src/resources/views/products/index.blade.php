@@ -1,4 +1,8 @@
-{{-- resources/views/products/index.blade.php --}}
+@extends('layouts.app')
+
+@section('title', '商品一覧')
+
+@section('content')
 <h1>商品一覧</h1>
 
 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
@@ -15,6 +19,14 @@
             @endforeach
         </p>
     </div>
+    {{-- ループ文に追記(リンク部分) --}}
+    <div class="product-card">
+        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+        <h3>{{ $product->name }}</h3>
+
+        {{-- 詳細ボタンを追加 --}}
+        <a href="{{ route('products.show', $product->id) }}" class="btn">詳細を見る</a>
+    </div>
     @endforeach
 </div>
 
@@ -22,3 +34,4 @@
 <div style="margin-top: 20px;">
     {{ $products->links() }}
 </div>
+@endsection

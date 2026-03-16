@@ -15,4 +15,14 @@ class ProductController extends Controller
         // views/products/index.blade.php を呼び出す
         return view('products.index', compact('products'));
     }
+
+    public function show($id)
+    {
+        // IDをもとに商品1件を取得（季節情報もセットで）
+        $product = Product::with('seasons')->findOrFail($id);
+
+        // products/show.blade.php にデータを渡す
+        return view('products.show', compact('product'));
+    }
+    
 }

@@ -66,9 +66,10 @@
 </form>
 
 {{-- 削除ボタン --}}
-<form action="#" method="POST">
+<form action="{{ route('products.destroy', $product->id) }}" method="POST">
     @csrf
-    <button type="submit">🗑</button>
+    @method('DELETE')
+    <button type="submit" onclick="return confirm('本当に削除しますか？')">🗑</button>
 </form>
 
 @endsection

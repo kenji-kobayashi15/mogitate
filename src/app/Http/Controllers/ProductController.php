@@ -44,13 +44,20 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $product->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'description' => $request->description,
-        ]);
+        $product->update($request->validated());
 
         $product->seasons()->sync($request->seasons);
+
+        return redirect()->route('products.index');
+    }
+
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+
+        // 商品を削除（関連する中間テーブルのデータもsync([])で消しておくと丁寧です）
+        $product->seasons()->detach();
+        $product->delete();
 
         return redirect()->route('products.index');
     }

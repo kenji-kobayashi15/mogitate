@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -37,5 +38,20 @@ class ProductController extends Controller
 
         // products/show.blade.php にデータを渡す
         return view('products.show', compact('product'));
+    }
+
+    public function update(ProductRequest $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $product->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description,
+        ]);
+
+        $product->seasons()->sync($request->seasons);
+
+        return redirect()->route('products.index');
     }
 }

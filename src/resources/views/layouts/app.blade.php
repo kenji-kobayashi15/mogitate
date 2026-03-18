@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
 <body>
     <header>
         <nav>
-            <a href="{{ route('products.index')}}">もぎたて (ホーム)</a>
+            <a href="{{ route('products.index') }}" class="brand-logo">mogitate</a>
         </nav>
     </header>
 
@@ -20,9 +20,6 @@
         @yield('content')
     </main>
 
-    <footer>
-        <p>&copy; 2026 mogitate</p>
-    </footer>
 </body>
 
 </html>

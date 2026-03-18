@@ -2,15 +2,97 @@
 
 /* 全体レイアウト */
 body {
-    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    font-family:
+        "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+        Meiryo, sans-serif;
     line-height: 1.6;
     color: #333;
     margin: 0;
     padding: 0;
 }
 
+/* ロゴのスタイル (mogitate) */
+.brand-logo {
+    font-family: "serif"; /* 画像に近いフォントがあれば指定 */
+    color: #e6b422; /* ゴールド系の色 */
+    font-weight: bold;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+/* タイトルとボタンを横並びにする箱 */
+.page-header {
+    display: flex;
+    justify-content: space-between; /* 左寄せにする */
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+/* ボタンの横幅が広がりすぎないように調整 */
+.page-header .btn {
+    display: inline-block; /* 以前 inline-flex にしていた場合はこれに戻す */
+}
+
+/* 必須ラベル (赤いチップ) */
+.label-required {
+    background-color: #ff0000;
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* ボタンの基本スタイル */
+.btn {
+    padding: 10px 30px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+
+/* オレンジボタン（登録・更新・検索） */
+.btn-orange {
+    background-color: #ffb800;
+    color: #fff;
+}
+
+/* グレーボタン（戻る） */
+.btn-gray {
+    background-color: #ddd;
+    color: #333;
+}
+
+/* フォーム要素の共通スタイル */
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* 幅にパディングを含める */
+    margin-top: 5px;
+}
+
+.textarea {
+    height: 150px;
+}
 main {
-    padding: 20px;
+    max-width: 1780px;
+    margin: 0 auto;
+    padding: 40px 20px;
 }
 
 header {
@@ -30,7 +112,7 @@ header {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px;
-    width: 200px;
+    width: 400px;
 }
 
 .product-card img {
@@ -48,11 +130,97 @@ header {
 
 /* 左側の検索エリアの幅を固定 */
 .sidebar {
-    width: 250px;
+    width: 400px;
     flex-shrink: 0;
 }
 
 /* 右側の表示エリアを広げる */
 .product-list-section {
     flex-grow: 1;
+}
+
+/* 各入力項目の塊に余白を作る */
+.form-group {
+    margin-bottom: 25px;
+    max-width: 600px; /* 画面中央に寄せるための幅制限 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ラベルを太字にする */
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* エラーメッセージの装飾 */
+.error-text {
+    color: #ff0000;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* ボタンを中央に並べる容器 */
+.button-group {
+    text-align: center;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* ページネーション全体のコンテナ */
+.pagination {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+/* 箇条書きのドット（・）を消して横並びにする */
+.pagination ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: 10px;
+    align-items: center;
+}
+
+/* 数字や矢印のリンク共通 */
+.pagination li a,
+.pagination li span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 50%; /* ここで丸くする */
+    box-sizing: border-box; /* パディングを幅に含める */
+}
+
+/* 1. 選択されていない通常の状態（数字・矢印共通） */
+.pagination li a {
+    background-color: #f5f5f5; /* 提供UIに近い、薄いグレーの円にする */
+    color: #333; /* 文字は黒系 */
+    transition: background-color 0.3s; /* ホバー時のアニメーション */
+}
+
+/* マウスホバー時（選択されていないもの） */
+.pagination li a:hover {
+    background-color: #e0e0e0; /* 少し濃いグレーにする */
+}
+
+/* 現在のページ（黄色い丸） */
+.pagination li.active span {
+    background-color: #FFB800;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* 無効なボタン（前へ、などが押せない時）の色を薄くする */
+.pagination li.disabled span {
+    color: #ccc;
+    background-color: #f5f5f5; /* 通常と同じ薄いグレー */
 }

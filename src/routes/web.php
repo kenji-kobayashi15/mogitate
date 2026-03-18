@@ -14,9 +14,7 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ProductController::class, 'index']);
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 // 商品登録画面の表示
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');

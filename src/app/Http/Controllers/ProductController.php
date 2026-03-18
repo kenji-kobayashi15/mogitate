@@ -44,7 +44,19 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $product->update($request->validated());
+        // 1. 画像以外のテキスト項目を上書き
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->description = $request->description;
+
+        // 2. 画像が新しく選ばれた場合のみ、保存してパスを書き換える
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $product->image = $imagePath;
+        }
+
+        // ③ データベースに確定保存
+        $product->save();
 
         $product->seasons()->sync($request->seasons);
 

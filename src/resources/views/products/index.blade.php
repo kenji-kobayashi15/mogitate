@@ -3,7 +3,10 @@
 @section('title', '商品一覧')
 
 @section('content')
-<h1>商品一覧</h1>
+<div class="page-header">
+    <h1>商品一覧</h1>
+    <a href="{{ route('products.create') }}" class="btn btn-orange">+ 商品を追加</a>
+</div>
 
 {{-- レイアウト全体を囲むコンテナ --}}
 <div class="main-container">
@@ -42,10 +45,6 @@
 
     {{-- 右側：商品一覧エリア --}}
     <div class="product-list-section">
-        {{-- 商品追加画面へのリンク（後でCSSでボタンにします） --}}
-        <div>
-            <a href="{{ route('products.create') }}">＋ 商品を追加</a>
-        </div>
         <div class="product-container">
             @foreach ($products as $product)
             <a href="{{ route('products.show', $product->id) }}" class="product-link">
@@ -60,7 +59,7 @@
 
         {{-- ページネーション --}}
         <div class="pagination">
-            {{ $products->links() }}
+            {{ $products->links('vendor.pagination.default') }}
         </div>
     </div>
 

@@ -42,6 +42,10 @@
 
     {{-- 右側：商品一覧エリア --}}
     <div class="product-list-section">
+        {{-- 商品追加画面へのリンク（後でCSSでボタンにします） --}}
+        <div>
+            <a href="{{ route('products.create') }}">＋ 商品を追加</a>
+        </div>
         <div class="product-container">
             @foreach ($products as $product)
             <a href="{{ route('products.show', $product->id) }}" class="product-link">

@@ -34,11 +34,11 @@
         <div>
             <label>季節</label>
             <div>
-                @foreach(['春', '夏', '秋', '冬'] as $seasonName)
-                <input type="checkbox" name="seasons[]" value="{{ $seasonName }}"
-                    {{-- oldがあればそれを優先、なければDBの値を参照する --}}
-                    {{ (is_array(old('seasons')) && in_array($seasonName, old('seasons')))
-                    || (!old('seasons') && $product->seasons->contains('name', $seasonName))
+                @foreach(['春', '夏', '秋', '冬'] as $index => $seasonName)
+                @php $seasonId = $index + 1; @endphp
+                <input type="checkbox" name="seasons[]" value="{{ $seasonId }}"
+                    {{ (is_array(old('seasons')) && in_array($seasonId, old('seasons')))
+                    || (!old('seasons') && $product->seasons->contains('id', $seasonId))
                     ? 'checked' : '' }}>
                 {{ $seasonName }}
                 @endforeach

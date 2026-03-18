@@ -61,4 +61,35 @@ class ProductController extends Controller
 
         return redirect()->route('products.index');
     }
+
+    public function create()
+    {
+        // 登録画面を表示するだけ
+        return view('products.create');
+    }
+
+    public function store(ProductRequest $request) // ここで ProductRequest を使う！
+    {
+        // 画像がアップロードされているか確認しつつ保存
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
+
+        // 2. データベースへの登録（商品本体）
+        $product = Product::create([
+            'name'        => $request->name,
+            'price'       => $request->price,
+            'description' => $request->description,
+            'image'       => $imagePath, // 保存したパスを記録
+        ]);
+
+        // 中間テーブルへの保存（ここで送られてきた [1, 2] などの数字が使われます）
+        if ($request->seasons) {
+            $product->seasons()->attach($request->seasons);
+        }
+
+        // 4. 一覧画面へ戻る
+        return redirect()->route('products.index');
+    }
 }

@@ -1,14 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<nav>
-    <a href="{{ route('products.index') }}">商品一覧</a> ＞ {{ $product->name }}
-</nav>
-
 <form id="update-form" action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
     <div class="detail-container">
+        <nav class="breadcrumb">
+            <a href="{{ route('products.index') }}">商品一覧</a> ＞ {{ $product->name }}
+        </nav>
         {{-- 左側：画像エリア --}}
         <div class="image-section">
             <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="width: 300px;">
@@ -67,21 +66,21 @@
         @enderror
     </div>
 </form>
-    {{-- ボタンエリア --}}
-    <div class="footer-button-container">
+{{-- ボタンエリア --}}
+<div class="footer-button-container">
 
-        {{-- 中央：戻る・保存ボタン --}}
-        <div class="button-group">
-            <a href="{{ route('products.index') }}" class="btn btn-gray">戻る</a>
-            <button type="submit" form="update-form" class="btn btn-orange">変更を保存</button>
-        </div>
-
-        {{-- 右端：削除ボタン --}}
-        <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="delete-form">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn-delete" onclick="return confirm('本当に削除しますか？')">🗑</button>
-        </form>
+    {{-- 中央：戻る・保存ボタン --}}
+    <div class="button-group">
+        <a href="{{ route('products.index') }}" class="btn btn-gray">戻る</a>
+        <button type="submit" form="update-form" class="btn btn-orange">変更を保存</button>
     </div>
 
-    @endsection
+    {{-- 右端：削除ボタン --}}
+    <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="delete-form">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn-delete" onclick="return confirm('本当に削除しますか？')">🗑</button>
+    </form>
+</div>
+
+@endsection

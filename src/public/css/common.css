@@ -452,11 +452,20 @@ h2 {
 
 /* 1. 全体を中央に寄せる（登録画面と同じ幅制限） */
 .detail-container {
-    max-width: 800px; /* 登録画面のregistration-formと合わせる */
+    display: flex;
+    flex-wrap: wrap;
+    flex-wrap: wrap; /* ★中身が溢れたら改行するように追加 */
+    gap: 40px;
+    max-width: 800px;
     margin: 0 auto;
-    display: flex; /* ★ここが重要：横並びにする★ */
-    gap: 40px; /* 画像と情報の間の隙間 */
-    align-items: flex-start; /* 上端で揃える */
+    align-items: flex-start;
+}
+
+.breadcrumb {
+    width: 100%;    /* ★横幅いっぱい（800px分）使うことで、パンくずだけで一行占領する */
+    margin-bottom: 10px; /* 下の画像との隙間（お手本に合わせて微調整してください） */
+    font-size: 14px;
+    color: #666;
 }
 
 /* 2. 左側の画像エリアの幅を固定 */

@@ -449,3 +449,78 @@ h2 {
     max-width: 600px;
     margin: 0 auto 30px;
 }
+
+/* 1. 全体を中央に寄せる（登録画面と同じ幅制限） */
+.detail-container {
+    max-width: 800px; /* 登録画面のregistration-formと合わせる */
+    margin: 0 auto;
+    display: flex;       /* ★ここが重要：横並びにする★ */
+    gap: 40px;           /* 画像と情報の間の隙間 */
+    align-items: flex-start; /* 上端で揃える */
+}
+
+/* 2. 左側の画像エリアの幅を固定 */
+.image-section {
+    width: 300px; /* HTMLのinline styleと合わせる */
+    flex-shrink: 0; /* 幅が縮まらないようにする */
+}
+
+/* 3. 画像自体のスタイル（インラインstyleはHTMLから消すのが理想） */
+.image-section img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px; /* 角を少し丸く */
+}
+
+/* 4. 右側の情報エリアを広げる */
+.info-section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* 中身（名前・値段・季節）を縦に並べる */
+    gap: 20px;
+}
+
+/* 各項目のラベルと入力欄の調整 */
+.info-section div {
+    display: flex;
+    flex-direction: column; /* ラベルと入力欄を縦に並べる */
+    gap: 8px;
+}
+
+/* 入力欄の幅を右側エリアにいっぱいにする */
+.info-section input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* paddingを含めた幅計算 */
+}
+
+/* 商品説明（これはcontainerの外なので、幅を合わせる） */
+.description-section {
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.description-section textarea {
+    width: 100%;
+    height: 150px;
+}
+
+/* 詳細画面のチェックボックスを横に並べる */
+.info-section .checkbox-group {
+    display: flex;       /* 横に並べる魔法の言葉 */
+    flex-direction: row; /* 横方向に指定 */
+    gap: 20px;           /* 項目同士の隙間 */
+    margin-top: 10px;    /* ラベルとの間の余白 */
+}
+
+/* チェックボックスと文字をセットにする設定 */
+.info-section .checkbox-label {
+    display: flex;
+    align-items: center; /* チェックボックスと文字の高さを揃える */
+    gap: 5px;            /* ボックスと文字の間の隙間 */
+    font-weight: normal; /* 文字を細くしてスッキリさせる */
+    cursor: pointer;
+}

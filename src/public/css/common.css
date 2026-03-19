@@ -66,7 +66,7 @@ body {
 /* オレンジボタン（登録・更新・検索） */
 .btn-orange {
     background-color: #ffb800;
-    color: black;
+    color: #666;
 }
 
 /* グレーボタン（戻る） */
@@ -133,7 +133,7 @@ header {
     margin: 0;
     font-size: 16px;
     font-weight: bold;
-    color: #333;
+    color: #666;
 }
 
 .product-card p {
@@ -144,8 +144,8 @@ header {
 
 .product-card img {
     width: 100%;
-    height: 180px; /* ★高さを少し抑えるとお手本のバランスに近づきます */
     object-fit: cover;
+    aspect-ratio: 4 / 3;
     border-radius: 4px;
 }
 

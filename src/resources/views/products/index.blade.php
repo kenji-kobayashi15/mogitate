@@ -58,9 +58,7 @@
     <div class="product-list-section">
         <div class="product-container">
             @foreach ($products as $product)
-            {{-- 1. aタグをカードの外から消し、カード自体を直下に置きます --}}
             <div class="product-card">
-                {{-- 2. カード全体をクリック可能にするために aタグで中身を包みます --}}
                 <a href="{{ route('products.show', $product->id) }}" class="product-link">
                     <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                     <div class="product-info">

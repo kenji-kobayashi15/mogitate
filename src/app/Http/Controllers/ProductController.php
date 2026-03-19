@@ -17,26 +17,20 @@ class ProductController extends Controller
         }
 
         if ($request->filled('sort')) {
-            // 'asc' なら低い順、'desc' なら高い順に並び替える
             $query->orderBy('price', $request->sort);
         } else {
-            // 何も選ばれていなければ、新着順（IDの大きい順）にしておく
             $query->orderBy('id', 'desc');
         }
 
-        // 季節情報(seasons)も一緒に、6件ずつ取得
         $products = $query->with('seasons')->paginate(6)->withQueryString();
 
-        // views/products/index.blade.php を呼び出す
         return view('products.index', compact('products'));
     }
 
     public function show($id)
     {
-        // IDをもとに商品1件を取得（季節情報もセットで）
         $product = Product::with('seasons')->findOrFail($id);
 
-        // products/show.blade.php にデータを渡す
         return view('products.show', compact('product'));
     }
 
@@ -44,18 +38,15 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        // 1. 画像以外のテキスト項目を上書き
         $product->name = $request->name;
         $product->price = $request->price;
         $product->description = $request->description;
 
-        // 2. 画像が新しく選ばれた場合のみ、保存してパスを書き換える
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('products', 'public');
             $product->image = $imagePath;
         }
 
-        // ③ データベースに確定保存
         $product->save();
 
         $product->seasons()->sync($request->seasons);
@@ -67,7 +58,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        // 商品を削除（関連する中間テーブルのデータもsync([])で消しておくと丁寧です）
         $product->seasons()->detach();
         $product->delete();
 
@@ -76,32 +66,27 @@ class ProductController extends Controller
 
     public function create()
     {
-        // 登録画面を表示するだけ
         return view('products.create');
     }
 
-    public function store(ProductRequest $request) // ここで ProductRequest を使う！
+    public function store(ProductRequest $request)
     {
-        // 画像がアップロードされているか確認しつつ保存
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('products', 'public');
         }
 
-        // 2. データベースへの登録（商品本体）
         $product = Product::create([
             'name'        => $request->name,
             'price'       => $request->price,
             'description' => $request->description,
-            'image'       => $imagePath, // 保存したパスを記録
+            'image'       => $imagePath,
         ]);
 
-        // 中間テーブルへの保存（ここで送られてきた [1, 2] などの数字が使われます）
         if ($request->seasons) {
             $product->seasons()->attach($request->seasons);
         }
 
-        // 4. 一覧画面へ戻る
         return redirect()->route('products.index');
     }
 }

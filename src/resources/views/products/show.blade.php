@@ -5,7 +5,7 @@
     <a href="{{ route('products.index') }}">商品一覧</a> ＞ {{ $product->name }}
 </nav>
 
-<form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+<form id="update-form" action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
     <div class="detail-container">
@@ -66,19 +66,22 @@
         <p style="color: red;">{{ $message }}</p>
         @enderror
     </div>
-
+</form>
     {{-- ボタンエリア --}}
-    <div class="button-group">
-        <a href="{{ route('products.index') }}" class="btn btn-gray">戻る</a>
-        <button type="submit" class="btn btn-orange">変更を保存</button>
+    <div class="footer-button-container">
+
+        {{-- 中央：戻る・保存ボタン --}}
+        <div class="button-group">
+            <a href="{{ route('products.index') }}" class="btn btn-gray">戻る</a>
+            <button type="submit" form="update-form" class="btn btn-orange">変更を保存</button>
+        </div>
+
+        {{-- 右端：削除ボタン --}}
+        <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="delete-form">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn-delete" onclick="return confirm('本当に削除しますか？')">🗑</button>
+        </form>
     </div>
-</form>
 
-{{-- 削除ボタン --}}
-<form action="{{ route('products.destroy', $product->id) }}" method="POST">
-    @csrf
-    @method('DELETE')
-    <button type="submit" onclick="return confirm('本当に削除しますか？')">🗑</button>
-</form>
-
-@endsection
+    @endsection

@@ -454,8 +454,8 @@ h2 {
 .detail-container {
     max-width: 800px; /* 登録画面のregistration-formと合わせる */
     margin: 0 auto;
-    display: flex;       /* ★ここが重要：横並びにする★ */
-    gap: 40px;           /* 画像と情報の間の隙間 */
+    display: flex; /* ★ここが重要：横並びにする★ */
+    gap: 40px; /* 画像と情報の間の隙間 */
     align-items: flex-start; /* 上端で揃える */
 }
 
@@ -510,17 +510,59 @@ h2 {
 
 /* 詳細画面のチェックボックスを横に並べる */
 .info-section .checkbox-group {
-    display: flex;       /* 横に並べる魔法の言葉 */
+    display: flex; /* 横に並べる魔法の言葉 */
     flex-direction: row; /* 横方向に指定 */
-    gap: 20px;           /* 項目同士の隙間 */
-    margin-top: 10px;    /* ラベルとの間の余白 */
+    gap: 20px; /* 項目同士の隙間 */
+    margin-top: 10px; /* ラベルとの間の余白 */
 }
 
 /* チェックボックスと文字をセットにする設定 */
 .info-section .checkbox-label {
     display: flex;
     align-items: center; /* チェックボックスと文字の高さを揃える */
-    gap: 5px;            /* ボックスと文字の間の隙間 */
+    gap: 5px; /* ボックスと文字の間の隙間 */
     font-weight: normal; /* 文字を細くしてスッキリさせる */
     cursor: pointer;
+}
+
+/* ボタン全体を横並びにするための土台 */
+.footer-button-container {
+    display: flex;
+    justify-content: center; /* メインボタンを中央に */
+    align-items: center;
+    position: relative;      /* ゴミ箱の基準点 */
+    margin-top: 40px;
+    padding-bottom: 50px;
+
+    /* ★ここがポイント：幅を100vwから、白いエリアと同じmax-widthにする★ */
+    width: 100%;             /* 親要素の幅いっぱいに広げる */
+    max-width: 800px;        /* .detail-containerと同じ幅に合わせる */
+    margin-left: auto;       /* 自動で中央寄せ */
+    margin-right: auto;      /* 自動で中央寄せ */
+}
+
+/* 削除フォームを右端に配置 */
+.delete-form {
+    position: absolute;
+    /* 親の container が狭くても、そこから右に突き抜ける設定 */
+    right: 20px; /* 数値は調整してください。マイナスにすると右へ飛び出します */
+    top: 45%;      /* 親要素（container）の上から50%の位置へ */
+    transform: translateY(-50%); /* 自身の高さの半分だけ上に戻して、完全に中央揃えにする */
+    margin: 0;
+}
+
+/* ゴミ箱ボタン自体の見た目（お手本風） */
+.btn-delete {
+    background-color: transparent; /* 背景なし */
+    border: 1px solid #ff4d4d; /* 薄い赤の枠線 */
+    color: #ff4d4d; /* 赤いゴミ箱 */
+    font-size: 18px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-delete:hover {
+    background-color: #fff5f5; /* ホバーで薄く赤くする */
 }

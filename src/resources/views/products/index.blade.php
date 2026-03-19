@@ -12,48 +12,63 @@
 <div class="main-container">
 
     {{-- 左側：検索・並び替えエリア --}}
-    <aside class="sidebar">
+    <div class="sidebar">
         <form action="{{ route('products.index') }}" method="GET">
-            <div>
-                <input type="text" name="keyword" placeholder="商品名で検索" value="{{ request('keyword') }}">
+            {{-- 1. 商品名検索 --}}
+            <div class="form-group">
+                <label>商品名で検索</label>
+                <input type="text" name="keyword" placeholder="商品名を入力" value="{{ request('keyword') }}">
+                <button type="submit" class="btn-search">検索</button>
             </div>
 
-            <div>
-                <button type="submit">検索</button>
-            </div>
-
-            <p>価格順で表示</p>
-            <div>
-                <select name="sort">
+            {{-- 2. 並び替え --}}
+            <div class="form-group">
+                <label>価格順で表示</label>
+                <select name="sort" onchange="this.form.submit()">
                     <option value="">価格で並び替え</option>
-                    <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>低い順に表示</option>
-                    <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>高い順に表示</option>
+                    <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>価格の安い順</option>
+                    <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>価格の高い順</option>
                 </select>
-                {{-- セレクトボックスのすぐ下に追記 --}}
-                @if(request('sort') == 'asc')
-                <div>
-                    <span>低い順に表示 <a href="{{ route('products.index', request()->except('sort')) }}">×</a></span>
-                </div>
-                @elseif(request('sort') == 'desc')
-                <div>
-                    <span>高い順に表示 <a href="{{ route('products.index', request()->except('sort')) }}">×</a></span>
-                </div>
-                @endif
             </div>
         </form>
-    </aside>
+
+        {{-- 現在の検索・並び替え条件（チップ） --}}
+        <div class="active-filters">
+            @if(request()->filled('keyword'))
+            <div class="filter-chip">
+                <span>「{{ request('keyword') }}」で検索</span>
+                <a href="{{ route('products.index', request()->except('keyword')) }}" class="filter-clear">×</a>
+            </div>
+            @endif
+
+            @if(request()->filled('sort'))
+            <div class="filter-chip">
+                <span>
+                    @if(request('sort') == 'asc') 価格の安い順
+                    @elseif(request('sort') == 'desc') 価格の高い順
+                    @endif
+                </span>
+                <a href="{{ route('products.index', request()->except('sort')) }}" class="filter-clear">×</a>
+            </div>
+            @endif
+        </div>
+    </div>
 
     {{-- 右側：商品一覧エリア --}}
     <div class="product-list-section">
         <div class="product-container">
             @foreach ($products as $product)
-            <a href="{{ route('products.show', $product->id) }}" class="product-link">
-                <div class="product-card">
+            {{-- 1. aタグをカードの外から消し、カード自体を直下に置きます --}}
+            <div class="product-card">
+                {{-- 2. カード全体をクリック可能にするために aタグで中身を包みます --}}
+                <a href="{{ route('products.show', $product->id) }}" class="product-link">
                     <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-                    <h3>{{ $product->name }}</h3>
-                    <p>¥{{ $product->price }}</p>
-                </div>
-            </a>
+                    <div class="product-info">
+                        <h3>{{ $product->name }}</h3>
+                        <p>¥{{ $product->price }}</p>
+                    </div>
+                </a>
+            </div>
             @endforeach
         </div>
 

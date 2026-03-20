@@ -29,6 +29,7 @@ php artisan migrate --seed
 
 # ストレージのリンク作成（画像表示のために必須）
 php artisan storage:link
+```
 
 開発環境（URL）
 商品一覧（検索・並び替え）: http://localhost/products/search

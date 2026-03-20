@@ -21,13 +21,12 @@
             @error('price') <p class="error-text">{{ $message }}</p> @enderror
         </div>
 
-        {{-- 商品画像 --}}
+        {{-- 商品画像（方法A：標準ボタンに変更） --}}
         <div class="form-group">
             <label>商品画像 <span class="label-required">必須</span></label>
-            <label for="image-upload" class="btn-file-select custom-file-width">
-                ファイルを選択
-            </label>
-            <input type="file" name="image" id="image-upload" style="display:none;">
+            <div class="file-input-container">
+                <input type="file" name="image" id="image-upload">
+            </div>
             @error('image') <p class="error-text" style="color:red;">{{ $message }}</p> @enderror
         </div>
 

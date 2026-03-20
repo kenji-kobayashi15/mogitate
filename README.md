@@ -49,7 +49,7 @@ Nginx: 1.21.1
 Docker / Docker Compose
 
 ER図
-
+![ER図](./mogitate1.png)
 ![ER図](./mogitate1.png)
 
 補足事項

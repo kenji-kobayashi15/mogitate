@@ -39,18 +39,14 @@ php artisan storage:link
 
 使用技術（実行環境）
 PHP: 8.1.34
-
 Laravel: 8.83.8
-
 MySQL: 8.0.26
-
 Nginx: 1.21.1
-
 Docker / Docker Compose
 
 ER図
-![ER図](./mogitate1.png)
-![ER図](./mogitate1.png)
+
+![ER図](mogitate1.png)
 
 補足事項
 画像アップロード: 商品画像は storage/app/public/products に保存されます。

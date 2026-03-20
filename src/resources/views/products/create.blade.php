@@ -24,11 +24,11 @@
         {{-- 商品画像 --}}
         <div class="form-group">
             <label>商品画像 <span class="label-required">必須</span></label>
-            <label class="btn-file-select custom-file-width">
+            <label for="image-upload" class="btn-file-select custom-file-width">
                 ファイルを選択
-                <input type="file" name="image" style="display:none;">
             </label>
-            @error('image') <p class="error-text">{{ $message }}</p> @enderror
+            <input type="file" name="image" id="image-upload" style="display:none;">
+            @error('image') <p class="error-text" style="color:red;">{{ $message }}</p> @enderror
         </div>
 
         {{-- 季節 --}}
@@ -56,7 +56,6 @@
             @error('description') <p class="error-text">{{ $message }}</p> @enderror
         </div>
 
-        {{-- ボタンエリア --}}
         <div class="button-group">
             <a href="{{ route('products.index') }}" class="btn btn-gray">戻る</a>
             <button type="submit" class="btn btn-orange">登録</button>

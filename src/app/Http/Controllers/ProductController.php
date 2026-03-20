@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -27,22 +28,26 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
-    public function show($id)
+    public function show($productId)
     {
-        $product = Product::with('seasons')->findOrFail($id);
+        $product = Product::with('seasons')->findOrFail($productId);
 
         return view('products.show', compact('product'));
     }
 
-    public function update(ProductRequest $request, $id)
+    public function update(ProductRequest $request, $productId)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::findOrFail($productId);
 
         $product->name = $request->name;
         $product->price = $request->price;
         $product->description = $request->description;
 
         if ($request->hasFile('image')) {
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+
             $imagePath = $request->file('image')->store('products', 'public');
             $product->image = $imagePath;
         }
@@ -54,9 +59,13 @@ class ProductController extends Controller
         return redirect()->route('products.index');
     }
 
-    public function destroy($id)
+    public function destroy($productId)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::findOrFail($productId);
+
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
+        }
 
         $product->seasons()->detach();
         $product->delete();
@@ -71,10 +80,8 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
-        }
+        // バリデーションでimage必須にしているので、必ずここを通ります
+        $imagePath = $request->file('image')->store('products', 'public');
 
         $product = Product::create([
             'name'        => $request->name,

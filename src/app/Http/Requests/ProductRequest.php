@@ -6,21 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
@@ -28,7 +18,7 @@ class ProductRequest extends FormRequest
             'price' => 'required|integer|min:0|max:10000',
             'seasons' => 'required|array',
             'description' => 'required|max:120',
-            'image' => 'nullable|image|mimes:jpeg,png',
+            'image' => 'required|image|mimes:jpeg,png',
         ];
     }
 
@@ -43,6 +33,7 @@ class ProductRequest extends FormRequest
             'seasons.required' => '季節を選択してください',
             'description.required' => '商品説明を入力してください',
             'description.max' => '120文字以内で入力してください',
+            'image.required' => '商品画像を登録してください',
             'image.mimes' => '「.png」または「.jpeg」形式でアップロードしてください',
         ];
     }

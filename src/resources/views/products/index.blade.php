@@ -5,7 +5,7 @@
 @section('content')
 <div class="page-header">
     <h1>商品一覧</h1>
-    <a href="{{ route('products.create') }}" class="btn btn-orange">+ 商品を追加</a>
+    <a href="{{ route('products.register') }}" class="btn btn-orange">+ 商品を追加</a>
 </div>
 
 {{-- レイアウト全体を囲むコンテナ --}}
@@ -13,7 +13,7 @@
 
     {{-- 左側：検索・並び替えエリア --}}
     <div class="sidebar">
-        <form action="{{ route('products.index') }}" method="GET">
+        <form action="{{ route('products.search') }}" method="GET">
             {{-- 1. 商品名検索 --}}
             <div class="form-group">
                 <label>商品名で検索</label>
@@ -37,7 +37,7 @@
             @if(request()->filled('keyword'))
             <div class="filter-chip">
                 <span>「{{ request('keyword') }}」で検索</span>
-                <a href="{{ route('products.index', request()->except('keyword')) }}" class="filter-clear">×</a>
+                <a href="{{ route('products.search', request()->except('keyword')) }}" class="filter-clear">×</a>
             </div>
             @endif
 
@@ -48,7 +48,7 @@
                     @elseif(request('sort') == 'desc') 価格の高い順
                     @endif
                 </span>
-                <a href="{{ route('products.index', request()->except('sort')) }}" class="filter-clear">×</a>
+                <a href="{{ route('products.search', request()->except('sort')) }}" class="filter-clear">×</a>
             </div>
             @endif
         </div>
@@ -59,7 +59,7 @@
         <div class="product-container">
             @foreach ($products as $product)
             <div class="product-card">
-                <a href="{{ route('products.show', $product->id) }}" class="product-link">
+                <a href="{{ route('products.detail', ['productId' => $product->id]) }}" class="product-link">
                     <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                     <div class="product-info">
                         <h3>{{ $product->name }}</h3>

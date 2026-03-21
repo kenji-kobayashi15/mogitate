@@ -49,7 +49,9 @@ ER図
 
 ![ER図](mogitate1.png)
 
+
 補足事項
+
 画像アップロード: 商品画像は storage/app/public/products に保存されます。
 
 シンボリックリンク: php artisan storage:link を実行することで、public/storage を経由してブラウザから画像が表示されるようになります。

@@ -61,8 +61,6 @@ body {
     font-size: 14px;
     min-width: 65px;
     text-align: center;
-    /* width: fit-content; */
-    /* box-sizing: border-box; */
 }
 
 /* オレンジボタン（登録・更新・検索） */
@@ -361,17 +359,6 @@ header {
     padding: 20px;
 }
 
-/* 必須ラベルの共通化 */
-.label-required {
-    background-color: #ff0000;
-    color: #fff;
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 2px;
-    margin-left: 8px;
-    vertical-align: middle;
-}
-
 /* チェックボックスを横に並べる */
 .checkbox-group {
     display: flex;
@@ -399,14 +386,6 @@ header {
     color: #ff0000;
     font-size: 13px;
     margin-top: 5px;
-}
-
-/* 追加箇所「複数選択可」*/
-.text-note-red {
-    color: #ff0000;
-    font-size: 12px;
-    margin-left: 10px;
-    font-weight: normal;
 }
 
 /* 追加「ファイルを選択」 */
@@ -458,7 +437,6 @@ h2 {
 /* 1. 全体を中央に寄せる（登録画面と同じ幅制限） */
 .detail-container {
     display: flex;
-    flex-wrap: wrap;
     flex-wrap: wrap;
     gap: 40px;
     max-width: 800px;
@@ -578,16 +556,3 @@ h2 {
     border: none;
     outline: none;
 }
-
-/* 削除フォームを右端に配置 */
-.delete-form {
-    position: absolute;
-    /* 親の container が狭くても、そこから右に突き抜ける設定 */
-    right: 130px; /* 数値は調整してください。マイナスにすると右へ飛び出します */
-    top: 45%;      /* 親要素（container）の上から50%の位置へ */
-    transform: translateY(-50%); /* 自身の高さの半分だけ上に戻して、完全に中央揃えにする */
-    margin: 0;
-}
-
-.btn-delete:hover {
-    background-color: rgb(246, 227, 230); /* ホバーで薄く赤くする */

@@ -18,7 +18,10 @@ class ProductRequest extends FormRequest
             'price' => 'required|integer|min:0|max:10000',
             'seasons' => 'required|array',
             'description' => 'required|max:120',
-            'image' => 'required|image|mimes:jpeg,png',
+            // PATCHの時はnullable、POSTの時はrequired
+            'image' => $this->isMethod('PATCH')
+                ? 'nullable|image|mimes:jpeg,png'
+                : 'required|image|mimes:jpeg,png',
         ];
     }
 

@@ -32,7 +32,8 @@
                 @error('price') <p class="error-text">{{ $message }}</p> @enderror
             </div>
 
-            <div>
+            {{-- 季節 --}}
+            <!-- <div>
                 <label>季節</label>
                 <div class="checkbox-group">
                     @foreach(['春', '夏', '秋', '冬'] as $index => $seasonName)
@@ -49,7 +50,8 @@
                 @error('seasons')
                 <p class="error-text">{{ $message }}</p>
                 @enderror
-            </div>
+            </div> -->
+            @include('products.partials.seasons')
         </div>
     </div>
 

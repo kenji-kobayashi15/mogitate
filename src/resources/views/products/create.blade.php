@@ -31,7 +31,7 @@
         </div>
 
         {{-- 季節 --}}
-        <div class="form-group">
+        <!-- <div class="form-group">
             <div class="label-row">
                 <label>季節 <span class="label-required">必須</span></label>
                 <span class="text-note-red">複数選択可</span>
@@ -46,7 +46,9 @@
                 @endforeach
             </div>
             @error('seasons') <p class="error-text">{{ $message }}</p> @enderror
-        </div>
+        </div> -->
+
+        @include('products.partials.seasons')
 
         {{-- 商品説明 --}}
         <div class="form-group">

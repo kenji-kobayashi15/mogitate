@@ -39,20 +39,32 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($productId);
 
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->description = $request->description;
+        // $product->name = $request->name;
+        // $product->price = $request->price;
+        // $product->description = $request->description;
+
+        // if ($request->hasFile('image')) {
+        //     if ($product->image) {
+        //         Storage::disk('public')->delete($product->image);
+        //     }
+
+        //     $imagePath = $request->file('image')->store('products', 'public');
+        //     $product->image = $imagePath;
+        // }
+        // $product->save();
+        // $product->seasons()->sync($request->seasons);
+        // return redirect()->route('products.index');
+        // }
+
+
+        // リファクタリングした表示方法
+        // fill + saveをupdateで一行に
+        $product->update($request->only(['name', 'price', 'description']));
 
         if ($request->hasFile('image')) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
-            }
-
-            $imagePath = $request->file('image')->store('products', 'public');
-            $product->image = $imagePath;
+            Storage::disk('public')->delete($product->image);
+            $product->update(['image' => $request->file('image')->store('products', 'public')]);
         }
-
-        $product->save();
 
         $product->seasons()->sync($request->seasons);
 
@@ -79,21 +91,35 @@ class ProductController extends Controller
     }
 
     public function store(ProductRequest $request)
-    {
-        // バリデーションでimage必須にしているので、必ずここを通ります
-        $imagePath = $request->file('image')->store('products', 'public');
+    // {
+    //     バリデーションでimage必須にしているので、必ずここを通ります
+    //     $imagePath = $request->file('image')->store('products', 'public');
 
+    //     $product = Product::create([
+    //         'name'        => $request->name,
+    //         'price'       => $request->price,
+    //         'description' => $request->description,
+    //         'image'       => $imagePath,
+    //     ]);
+    //     if ($request->seasons) {
+    //         $product->seasons()->attach($request->seasons);
+    //     }
+    //     return redirect()->route('products.index');
+    // }
+
+    // リファクタリングしたコード
+    {
         $product = Product::create([
             'name'        => $request->name,
             'price'       => $request->price,
             'description' => $request->description,
-            'image'       => $imagePath,
+            'image'       => $request->file('image')->store('products', 'public'),
         ]);
 
-        if ($request->seasons) {
-            $product->seasons()->attach($request->seasons);
-        }
+        // if不要
+        $product->seasons()->attach($request->seasons);
 
         return redirect()->route('products.index');
     }
+
 }

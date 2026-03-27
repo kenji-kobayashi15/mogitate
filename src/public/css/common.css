@@ -111,6 +111,7 @@ header {
     width: 100%;
 }
 
+/* 商品カード */
 .product-card {
     border: 1px solid #ddd;
     border-radius: 8px;
